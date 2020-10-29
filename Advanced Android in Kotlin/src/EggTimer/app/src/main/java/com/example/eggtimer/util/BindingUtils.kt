@@ -14,22 +14,19 @@
  * limitations under the License.
  */
 
-package com.example.android.eggtimernotifications
+package com.example.eggtimer.util
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.example.eggtimer.ui.EggTimerFragment
+import android.text.format.DateUtils
+import android.widget.TextView
+import androidx.databinding.BindingAdapter
 
-class MainActivity : AppCompatActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setContentView(R.layout.activity_main)
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, EggTimerFragment.newInstance())
-                .commitNow()
-        }
-    }
+/**
+ * Converts milliseconds to formatted mm:ss
+ *
+ * @param value, time in milliseconds.
+ */
+@BindingAdapter("elapsedTime")
+fun TextView.setElapsedTime(value: Long) {
+    val seconds = value / 1000
+    text = if (seconds < 60) seconds.toString() else DateUtils.formatElapsedTime(seconds)
 }
